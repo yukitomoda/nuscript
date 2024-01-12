@@ -150,31 +150,31 @@ export def min-by [
 }
 
 export def base-26 [
-	--lower-case(-l)
+  --lower-case(-l)
 ] {
   let value = $in
   assert-value-type $value [int]
 
   assert greater or equal $value 0
 
-	generate $value {|v|
-		let d = $v mod 26
-		let next = $v // 26
-		if $next == 0 {
-			{out: $d}
-		} else {
-			{out: $d, next: $next}
-		}
-	}
-	| update 0 {|d| $d + 1}
-	| reverse
-	| each {|d|
-		let code = if $lower_case {
-			0x60 + $d
-		} else {
-			0x40 + $d
-		}
-		char --integer $code
-	}
-	| str join
+  generate $value {|v|
+    let d = $v mod 26
+    let next = $v // 26
+    if $next == 0 {
+      {out: $d}
+    } else {
+      {out: $d, next: $next}
+    }
+  }
+  | update 0 {|d| $d + 1}
+  | reverse
+  | each {|d|
+    let code = if $lower_case {
+      0x60 + $d
+    } else {
+      0x40 + $d
+    }
+    char --integer $code
+  }
+  | str join
 }
